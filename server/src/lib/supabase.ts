@@ -1,7 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv';
 
-dotenv.config();
+// dotenv is not needed in Vercel production environment as env vars are injected
+// and can cause issues if .env file is missing or path is wrong
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    // Dynamic import to avoid build-time errors if dotenv is missing
+    import('dotenv').then(d => d.config());
+  } catch (e) {
+    // Ignore error
+  }
+}
 
 const supabaseUrl = process.env.SUPABASE_URL || 'https://placeholder.supabase.co';
 const supabaseKey = process.env.SUPABASE_KEY || 'placeholder';
