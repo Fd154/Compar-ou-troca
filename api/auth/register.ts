@@ -1,16 +1,5 @@
 import { z } from 'zod';
-import { createClient } from '@supabase/supabase-js';
-
-// Initialize Supabase Client directly
-const supabaseUrl = process.env.SUPABASE_URL || '';
-const supabaseKey = process.env.SUPABASE_KEY || '';
-
-// Basic validation to warn in logs (not crashing)
-if (!supabaseUrl || !supabaseKey) {
-  console.warn('Missing Supabase credentials in register handler');
-}
-
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from '../lib/supabase.js';
 
 const registerSchema = z.object({
   name: z.string().min(2),

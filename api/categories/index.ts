@@ -1,9 +1,9 @@
-import { Router } from 'express';
 import { supabase } from '../lib/supabase.js';
 
-const router = Router();
+export const config = {
+  runtime: 'nodejs',
+};
 
-// Fallback data in case DB is empty or fails
 const fallbackCategories = [
   { id: 1, name: 'Imóveis', icon: 'home' },
   { id: 2, name: 'Autos', icon: 'car' },
@@ -14,7 +14,16 @@ const fallbackCategories = [
   { id: 7, name: 'Serviços', icon: 'briefcase' },
 ];
 
-router.get('/', async (req, res) => {
+export default async function handler(req: any, res: any) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  
+  if (req.method === 'OPTIONS') return res.status(200).end();
+
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   try {
     const { data, error } = await supabase
       .from('categories')
@@ -30,12 +39,9 @@ router.get('/', async (req, res) => {
       return res.json(data);
     }
     
-    // Return fallback if no data found
-    res.json(fallbackCategories);
+    return res.json(fallbackCategories);
   } catch (err) {
     console.error('Failed to fetch categories:', err);
-    res.json(fallbackCategories);
+    return res.json(fallbackCategories);
   }
-});
-
-export default router;
+}

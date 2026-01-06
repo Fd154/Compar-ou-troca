@@ -7,20 +7,8 @@
   },
   "rewrites": [
     {
-      "source": "/api/test-import",
-      "destination": "/api/test-import"
-    },
-    {
-      "source": "/api/debug-cjs",
-      "destination": "/api/debug-cjs"
-    },
-    {
-      "source": "/api/auth/register",
-      "destination": "/api/auth/register"
-    },
-    {
       "source": "/api/(.*)",
-      "destination": "/api/index"
+      "destination": "/api/$1"
     },
     {
       "source": "/(.*)",
