@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { supabase } from '../_lib/supabase.js';
+import { supabase } from '../_lib/supabase';
 
 const registerSchema = z.object({
   name: z.string().min(2),
