@@ -2,12 +2,8 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/api/debug-standalone",
-      "destination": "/api/debug-standalone"
-    },
-    {
-      "source": "/api/debug-js",
-      "destination": "/api/debug-js"
+      "source": "/api/debug-cjs",
+      "destination": "/api/debug-cjs"
     },
     {
       "source": "/api/auth/register",
