@@ -1,14 +1,14 @@
+import app from '../server/src/index.js';
+
 export default async function handler(req: any, res: any) {
   try {
-    const appModule = await import('../server/src/index.js');
-    const app = appModule.default;
+    console.log('API Handler started');
     return app(req, res);
   } catch (error: any) {
     console.error('API Error:', error);
     res.status(500).json({ 
       error: 'Internal Server Error', 
-      details: error.message,
-      stack: error.stack 
+      details: error.message 
     });
   }
 }
