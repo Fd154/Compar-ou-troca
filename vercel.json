@@ -2,6 +2,10 @@
   "version": 2,
   "rewrites": [
     {
+      "source": "/api/debug-standalone",
+      "destination": "/api/debug-standalone"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "/api/index"
     },
