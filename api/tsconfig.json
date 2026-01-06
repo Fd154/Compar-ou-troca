@@ -2,14 +2,18 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "target": "ES2022",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "verbatimModuleSyntax": false,
-    "allowImportingTsExtensions": false
+    "allowImportingTsExtensions": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["../*"]
+    }
   },
   "include": ["../api/**/*", "../server/src/**/*"]
 }
