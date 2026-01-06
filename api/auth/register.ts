@@ -1,5 +1,16 @@
 import { z } from 'zod';
-import { supabase } from '../_lib/supabase.js';
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize Supabase Client directly
+const supabaseUrl = process.env.SUPABASE_URL || '';
+const supabaseKey = process.env.SUPABASE_KEY || '';
+
+// Basic validation to warn in logs (not crashing)
+if (!supabaseUrl || !supabaseKey) {
+  console.warn('Missing Supabase credentials in register handler');
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const registerSchema = z.object({
   name: z.string().min(2),
@@ -12,17 +23,8 @@ export const config = {
 };
 
 export default async function handler(req: any, res: any) {
-  console.log('[Register] Function invoked');
-  
-  // Debug Environment Variables (Safe logging)
-  console.log('[Register] Environment Check:', {
-    hasSupabaseUrl: !!process.env.SUPABASE_URL,
-    hasSupabaseKey: !!process.env.SUPABASE_KEY,
-    nodeEnv: process.env.NODE_ENV
-  });
-
-  // CORS
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  // CORS Handling
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(
@@ -35,58 +37,40 @@ export default async function handler(req: any, res: any) {
   }
 
   if (req.method !== 'POST') {
-    console.log(`[Register] Method ${req.method} not allowed`);
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    console.log('[Register] Parsing body...');
-    // Log body keys to verify payload structure without logging passwords
-    const bodyKeys = req.body ? Object.keys(req.body) : [];
-    console.log('[Register] Body keys received:', bodyKeys);
+    console.log('[Register] Processing request');
+    const body = req.body;
+    
+    // Parse body
+    const { email, password, name } = registerSchema.parse(body);
 
-    if (!req.body) {
-      throw new Error('Request body is empty');
-    }
-
-    const { email, password, name } = registerSchema.parse(req.body);
-    console.log(`[Register] Validated payload for email: ${email}`);
-
-    console.log('[Register] Calling Supabase auth.signUp...');
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name } }
+      options: {
+        data: { name }
+      }
     });
 
-    if (error) {
-      console.error('[Register] Supabase error:', error);
-      throw error;
-    }
+    if (error) throw error;
 
-    console.log('[Register] Success. User ID:', data.user?.id);
     return res.status(201).json({
       token: data.session?.access_token,
-      user: { 
-        id: data.user?.id, 
-        name: data.user?.user_metadata.name, 
-        email: data.user?.email 
+      user: {
+        id: data.user?.id,
+        name: data.user?.user_metadata?.name,
+        email: data.user?.email
       }
     });
 
   } catch (error: any) {
-    console.error('[Register] Critical Error:', error);
-    
+    console.error('[Register] Error:', error);
     if (error instanceof z.ZodError) {
-      return res.status(400).json({ 
-        error: 'Validation Error', 
-        details: error.errors 
-      });
+      return res.status(400).json({ errors: error.errors });
     }
-
-    return res.status(500).json({ 
-      error: error.message || 'Internal Server Error',
-      timestamp: new Date().toISOString()
-    });
+    return res.status(500).json({ error: error.message || 'Registration failed' });
   }
 }
