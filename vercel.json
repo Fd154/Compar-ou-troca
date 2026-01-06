@@ -7,6 +7,10 @@
   },
   "rewrites": [
     {
+      "source": "/api/test-import",
+      "destination": "/api/test-import"
+    },
+    {
       "source": "/api/debug-cjs",
       "destination": "/api/debug-cjs"
     },
