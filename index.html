@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class', // Enable dark mode via class
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              primary: {
+                DEFAULT: 'rgb(var(--color-primary) / <alpha-value>)',
+                hover: 'rgb(var(--color-primary-hover) / <alpha-value>)',
+                light: 'rgb(var(--color-primary-light) / <alpha-value>)'
+              },
+              secondary: {
+                DEFAULT: '#10B981', // Success Green
+                hover: '#059669',
+                light: '#ECFDF5'
+              },
+              neutral: {
+                50: '#F9FAFB',
+                100: '#F3F4F6', 
+                200: '#E5E7EB',
+                500: '#6B7280', 
+                800: '#1F2937', 
+                900: '#111827',
+                950: '#030712' // Darker shade for dark mode
+              },
+              danger: {
+                DEFAULT: '#EF4444', 
+                light: '#FEF2F2'
+              },
+              // Dark mode specific backgrounds
+              dark: {
+                bg: '#111827',
+                card: '#1F2937',
+                border: '#374151'
+              }
+            },
+            boxShadow: {
+              'card': '0 2px 8px rgba(0,0,0,0.1)',
+              'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+            },
+            borderRadius: {
+              'lg': '8px',
+              'xl': '12px'
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+      
+      /* CSS Variables for Dynamic Theming */
+      :root {
+        /* Default Blue Theme */
+        --color-primary: 37 99 235;       /* #2563EB */
+        --color-primary-hover: 29 78 216; /* #1D4ED8 */
+        --color-primary-light: 239 246 255; /* #EFF6FF */
+
+        /* Spacing Variables */
+        --spacing-xs: 4px;
+        --spacing-sm: 8px;
+        --spacing-md: 16px;
+        --spacing-lg: 24px;
+        --spacing-xl: 32px;
+        --spacing-xxl: 48px;
+
+        /* Breakpoints */
+        --breakpoint-mobile: 767px;
+        --breakpoint-tablet: 1024px;
+        --breakpoint-desktop: 1440px;
+      }
+
+      :root[data-theme='purple'] {
+        /* Purple Theme */
+        --color-primary: 124 58 237;      /* #7C3AED */
+        --color-primary-hover: 109 40 217; /* #6D28D9 */
+        --color-primary-light: 245 243 255; /* #F5F3FF */
+      }
+
+      body {
+        font-size: 16px;
+        background-color: #F3F4F6;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      
+      /* Dark Mode Global Overrides */
+      .dark body {
+        background-color: #111827; /* neutral-900 */
+        color: #F3F4F6; /* neutral-100 */
+      }
+      
+      .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+        color: #F9FAFB;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "recharts": "https://esm.sh/recharts@^3.6.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-neutral-100 text-neutral-800 antialiased dark:bg-neutral-900 dark:text-neutral-100">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
