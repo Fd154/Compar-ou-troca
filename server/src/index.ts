@@ -14,6 +14,14 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+app.get('/api/debug-env', (req, res) => {
+  res.json({
+    hasUrl: !!process.env.SUPABASE_URL,
+    hasKey: !!process.env.SUPABASE_KEY,
+    nodeEnv: process.env.NODE_ENV
+  });
+});
+
 app.use('/api/products', productsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/categories', categoriesRouter);
