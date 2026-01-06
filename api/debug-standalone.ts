@@ -1,15 +1,18 @@
-import express from 'express';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 export default function handler(req: any, res: any) {
   try {
+    const express = require('express');
+    const app = express();
+    
     res.json({ 
       status: 'ok',
+      method: 'require',
       typeofExpress: typeof express,
-      // Check if it's a function (default import) or object (namespace)
-      isFunction: typeof express === 'function',
-      message: 'If you see this, dependencies are loading.'
+      isFunction: typeof express === 'function'
     });
   } catch (e: any) {
-    res.status(500).json({ error: e.message });
+    res.status(500).json({ error: e.message, stack: e.stack });
   }
 }
