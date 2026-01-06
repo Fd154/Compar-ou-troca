@@ -19,6 +19,11 @@ app.use('/api/auth', authRouter);
 app.use('/api/categories', categoriesRouter);
 
 const PORT = Number(process.env.PORT) || 4000;
-app.listen(PORT, () => {
-  console.log(`api listening on http://localhost:${PORT}`);
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`api listening on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
