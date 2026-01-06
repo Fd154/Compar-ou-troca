@@ -6,6 +6,10 @@
       "destination": "/api/debug-standalone"
     },
     {
+      "source": "/api/auth/register",
+      "destination": "/api/auth/register"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "/api/index"
     },
