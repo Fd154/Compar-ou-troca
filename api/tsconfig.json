@@ -8,7 +8,8 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "verbatimModuleSyntax": false
+    "verbatimModuleSyntax": false,
+    "allowImportingTsExtensions": false
   },
-  "include": ["../api/**/*", "../server/**/*"]
+  "include": ["../api/**/*", "../server/src/**/*"]
 }
